@@ -134,8 +134,3 @@ if __name__ == '__main__':
 
     # get data loaders
     data_loaders = data_module.get_data_loaders()
-
-    #
-    for x, y, z in data_loaders['train']:
-        break
-    print(x.shape, y.shape, z.shape)

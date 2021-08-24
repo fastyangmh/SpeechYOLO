@@ -2,8 +2,7 @@
 import argparse
 import torch
 from src.utils import load_yaml
-from os.path import abspath, join, isfile
-from os import makedirs
+from os.path import abspath, isfile
 import numpy as np
 from timm import list_models
 

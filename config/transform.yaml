@@ -1,0 +1,45 @@
+train:
+  audio:
+    MelSpectrogram:
+      sample_rate: 16000  
+      n_mels: 64  
+    AmplitudeToDB:
+  vision:
+    Resize: 
+      - 224
+      - 224
+    RandomErasing:
+      value: -100
+
+val:
+  audio:
+    MelSpectrogram:
+      sample_rate: 16000  
+      n_mels: 64  
+    AmplitudeToDB:
+  vision:
+    Resize: 
+      - 224
+      - 224
+
+test:
+  audio:
+    MelSpectrogram:
+      sample_rate: 16000  
+      n_mels: 64  
+    AmplitudeToDB:
+  vision:
+    Resize: 
+      - 224
+      - 224
+
+predict:
+  audio:
+    MelSpectrogram:
+      sample_rate: 16000  
+      n_mels: 64  
+    AmplitudeToDB:
+  vision:
+    Resize: 
+      - 224
+      - 224

@@ -63,10 +63,10 @@ class ProjectParameters:
                                   help='the path of the pre-trained model checkpoint.')
         self._parser.add_argument('--optimizer_config_path', type=str,
                                   default='config/optimizer.yaml', help='the optimizer config path.')
-        self._parser.add_argument('--loss_function', type=str, default='BCELoss', choices=[
-                                  'BCELoss', 'CrossEntropyLoss'], help='the loss function.')
-        self._parser.add_argument(
-            '--alpha', type=float, default=0.2, help='the weight of label smoothing.')
+        self._parser.add_argument('--confidence', type=float, default=0.5,
+                                  help='the confidence used to check the keyword whether exist.')
+        self._parser.add_argument('--gap', type=float, default=0.01,
+                                  help='the gap to separate two identicle words.')
 
         # debug
         self._parser.add_argument(
@@ -132,9 +132,8 @@ class ProjectParameters:
         if project_parameters.checkpoint_path is not None and isfile(project_parameters.checkpoint_path):
             project_parameters.checkpoint_path = abspath(
                 project_parameters.checkpoint_path)
-        if not 0. <= project_parameters.alpha <= 1.:
-            assert False, 'please check the alpha value, the alpha value is limit from 0 to 1. input alpha value is {}'.format(
-                project_parameters.alpha)
+        project_parameters.output_features = project_parameters.cells * \
+            (project_parameters.boxes*3+project_parameters.num_classes)
 
         return project_parameters
 

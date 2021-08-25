@@ -66,9 +66,9 @@ class SpeechYoloDataSet(DatasetFolder):
                 yolo_data.append([cell_index, object_norm_x,
                                   object_norm_w, object_class])
         kwspotting_target = torch.ones(
-            [len(self.project_parameters.classes)]) * -1
+            [self.project_parameters.num_classes]) * -1
         target = torch.zeros([self.project_parameters.cells, (self.project_parameters.boxes *
-                                                              3+len(self.project_parameters.classes)+1)], dtype=torch.float32)
+                                                              3+self.project_parameters.num_classes+1)], dtype=torch.float32)
         for (cell_index, object_norm_x, object_norm_w, object_class) in yolo_data:
             target[cell_index, self.project_parameters.boxes*3 + object_class] = 1
             target[cell_index, -1] = 1

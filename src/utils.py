@@ -7,6 +7,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 import torchvision
 import torchaudio
+import torch
 
 # def
 
@@ -94,3 +95,17 @@ def get_transform_from_file(filepath):
     else:
         assert False, 'please check the transform config path: {}'.format(
             filepath)
+
+
+def load_checkpoint(model, out_features, use_cuda, checkpoint_path):
+    map_location = torch.device(
+        device='cuda') if use_cuda else torch.device(device='cpu')
+    checkpoint = torch.load(f=checkpoint_path, map_location=map_location)
+    for k in checkpoint['state_dict'].keys():
+        if 'classifier.bias' in k or 'classifier.weight' in k:
+            if checkpoint['state_dict'][k].shape[0] != out_features:
+                temp = checkpoint['state_dict'][k]
+                checkpoint['state_dict'][k] = torch.stack(
+                    [temp.mean(0)]*out_features, 0)
+    model.load_state_dict(checkpoint['state_dict'])
+    return model
